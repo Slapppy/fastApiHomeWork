@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Weather App</title>
+  </head>
+  <body>
+    <h1>Weather App</h1>
+    <form id="weather-form">
+      <label for="city-input">City:</label>
+      <input type="text" id="city-input" name="city" required>
+      <button type="submit">Get Weather</button>
+    </form>
+    <div id="weather-results"></div>
+
+    <script>
+      const form = document.getElementById('weather-form');
+      const resultsDiv = document.getElementById('weather-results');
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const city = formData.get('city');
+        fetch(`http://localhost:8000/weather?city=${city}`)
+          .then(response => response.json())
+          .then(data => {
+            resultsDiv.innerHTML = `
+              <h2>${data.city}</h2>
+              <p>Temperature: ${data.temperature} &deg;C</p>
+              <p>Humidity: ${data.humidity}%</p>
+              <p>Description: ${data.description}</p>
+            `;
+          })
+          .catch(error => console.error(error));
+      });
+    </script>
+  </body>
+</html>

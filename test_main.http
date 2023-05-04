@@ -1,0 +1,5 @@
+# Test your FastAPI endpoints
+
+GET http://localhost:8000/weather?city=Moscow
+Accept: application/json
+
